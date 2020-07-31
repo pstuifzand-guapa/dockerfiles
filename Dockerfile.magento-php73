@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.3-apache
 
 RUN useradd app -m
 RUN chgrp www-data /var/www
@@ -13,6 +13,7 @@ RUN apt-get update \
         libpng-dev \
         libxslt1-dev \
         libltdl-dev \
+        libzip-dev \
         git \
         libssl-dev
 

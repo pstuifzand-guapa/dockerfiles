@@ -29,18 +29,21 @@ RUN docker-php-ext-install \
     soap \
     xsl \
     zip \
-    bcmath
+    bcmath \
+    sockets
 
 RUN a2enmod rewrite
 
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
-RUN sed -i '1 a xdebug.remote_autostart=true' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i '1 a xdebug.remote_mode=req' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i '1 a xdebug.remote_handler=dbgp' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i '1 a xdebug.remote_connect_back=1 ' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i '1 a xdebug.remote_port=9000' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i '1 a xdebug.remote_host=0.0.0.0' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i '1 a xdebug.remote_enable=1' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo memory_limit=2G >> /usr/local/etc/php/conf.d/docker-php-ext-memory_limit.ini
 
+RUN sed -i -e '1 a xdebug.remote_autostart=true' \
+           -e '1 a xdebug.remote_mode=req' \
+           -e '1 a xdebug.remote_handler=dbgp' \
+           -e '1 a xdebug.remote_connect_back=1' \
+           -e '1 a xdebug.remote_port=9000' \
+           -e '1 a xdebug.remote_host=0.0.0.0' \
+           -e '1 a xdebug.remote_enable=1' \
+           /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+RUN echo memory_limit=2G >> /usr/local/etc/php/conf.d/docker-php-ext-memory_limit.ini
